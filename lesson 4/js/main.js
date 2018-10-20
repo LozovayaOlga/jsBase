@@ -6,6 +6,7 @@
 
 // **********************ЗАДАНИЕ 1	***********
 
+var number
 
 // **********************ЗАДАНИЕ 3
 
@@ -78,13 +79,16 @@ function showCart() {
 		var sum = 0;
 		var out = '';
 		for (var key in cart) {
-			out += 'Номер ' + key + ' -  ' + cart[key] + ' шт.' + '<br>';
-			out += '<img src="'+Products[key].image+'" width="110" height="110">' + '<br>';
-			out += Products[key].name + '<br>';
-			out += cart[key]*Products[key].price + ' руб.' + '<br>';
-			out += '<br>';
-			document.getElementById("my-cart").innerHTML = out;
-			sum += cart[key]*Products[key].price;
+			if (cart.hasOwnProperty(key)) {
+					out += 'Номер ' + key + ' -  ' + cart[key] + ' шт.' + '<br>';
+					out += '<img src="'+Products[key].image+'" width="110" height="110">' + '<br>';
+					out += Products[key].name + '<br>';
+					out += cart[key]*Products[key].price + ' руб.' + '<br>';
+					out += '<br>';
+					document.getElementById("my-cart").innerHTML = out;
+					sum += cart[key]*Products[key].price;     
+			} else 			
+					document.getElementById("my-cart").innerHTML = "вы ничего не выбрали";
 			}
 
 		document.getElementById("my-cost").innerHTML = "Cумма вашей покупки " + sum;
