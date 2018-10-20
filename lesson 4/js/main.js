@@ -1,11 +1,14 @@
 
 // **********************ЗАДАНИЕ 1	***********
 
+
 function NumberObject(number) {
+	
 	var str = String(number); //преобразуем число в строковый тип
 	var simpleNumber = str.split(''); // число разбиваем в массив на простые числа
 	var simpleNumberRevers = simpleNumber.reverse(); //записываем массив в обратном порядке
 	var objNumber = {}; // объект с единицами стонями и десятками
+	
 	if (simpleNumber.length = 3) {
 			objNumber['сотни'] = +simpleNumber[2]; 
 			objNumber['десятки'] = +simpleNumber[1]; 
@@ -68,7 +71,7 @@ var Products = {
 
 var cart = {}; //моя корзина
 
-//addToCart добавляет товар в корзину
+// добавляет товар в корзину
 function addToCart() {
 	// атрибут с номером data-id, прописан в тэге с кнопкой "Добавить в корзину"
 	var id = this.getAttribute('data-id'); 
@@ -105,6 +108,6 @@ function showCart() {
 		document.getElementById("my-cost").innerHTML = "Cумма вашей покупки " + sum;
 }
 
-//******тест результата******
+//******ТЕСТ результата******
 var cart = { "11111" : 1, "11114" : 2, "11113" : 1};
 showCart();
