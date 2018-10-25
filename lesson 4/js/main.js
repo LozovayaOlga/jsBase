@@ -1,7 +1,24 @@
 
 // **********************ЗАДАНИЕ 1	***********
 
+/* 
+let number = parseInt(prompt('Введите число от 0 до 999:', ''));
 
+while (isNaN(number) || number < 0 || number > 999) {
+    alert("Вы ввели некорректные данные. Нам нужно число от 0 до 999");
+    number = parseInt(prompt('Введите число от 0 до 999:', ''));
+}
+function getObjectFromNumber(number) {
+    let object = {};
+
+    object["единицы"] = number % 10;
+    object["десятки"] = Math.floor(number / 10) % 10;
+    object["сотни"] = Math.floor(number / 100) % 10;
+
+    return object;
+}
+console.log(getObjectFromNumber(number));
+*/
 function NumberObject(number) {
 	
 	var str = String(number); //преобразуем число в строковый тип
@@ -111,3 +128,81 @@ function showCart() {
 //******ТЕСТ результата******
 var cart = { "11111" : 1, "11114" : 2, "11113" : 1};
 showCart();
+
+
+
+/*
+Продолжаем работу с нашим интернет-магазином 2.1. В прошлом ДЗ Вы реализовали корзину на базе массивов. Какими объектами можно заменить элементы данных массивов? 2.2. Реализуйте такие объекты 2.3. Перенесите функционал подсчета корзины на объектно-ориентированную базу
+*/
+
+var objBasket = {
+    arrGoods: new Array(),
+    checkGoodInBasket: function(iId) {
+        for (let iElem in this.arrGoods) {
+            if (this.arrGoods[iElem].id == iId) {
+                return iElem;
+            }
+        }
+    },
+    addGoodToBasket: function(iId, sName, iCount, fPrice) {
+        if (iCount != 0) {
+            if (this.checkGoodInBasket(iId) == undefined) {
+                this.arrGoods[this.arrGoods.length] = {
+                    id: iId, //ид товара
+                    name: sName, //назнание товара
+                    count: iCount, //кол-во товара
+                    price: fPrice //
+                }    
+            } else {
+                this.arrGoods[this.checkGoodInBasket(iId)].count += iCount; 
+            }
+        } 
+    },
+    deleteGoodFromBasket: function(iId, iCount) {
+        let iElem = this.checkGoodInBasket(iId);
+        
+        if ((this.arrGoods[iElem].id == iId) && (this.arrGoods[iElem].count <= iCount)) {
+            this.arrGoods.splice(iElem,1);
+        } else if ((this.arrGoods[iElem].id == iId) && (this.arrGoods[iElem].count > iCount)) {
+            this.arrGoods[iElem].count -= iCount;
+        }
+    },
+    countGoodsInBasket: function() {
+        let iCountGoods = 0;
+        
+        for (let iElem in this.arrGoods) {
+            iCountGoods += this.arrGoods[iElem].count; 
+        }
+        
+        return iCountGoods;    
+    },
+    fullPriceInBasket: function() {
+        let fFullPrice = 0;
+        
+        for (let iElem in this.arrGoods) {
+            fFullPrice += this.arrGoods[iElem].count * this.arrGoods[iElem].price; 
+        }
+        
+        return fFullPrice;    
+    }
+};
+
+//Добавляем в корзину товары
+objBasket.addGoodToBasket(122, "Beer", 1, 10.5);
+objBasket.addGoodToBasket(123, "Vodka", 10, 9.5);
+objBasket.addGoodToBasket(124, "Sidr", 3, 8.5);
+objBasket.addGoodToBasket(125, "Ele", 25, 7.5);
+
+//Ой нет, больше сидра!
+objBasket.addGoodToBasket(124, "Sidr", 7, 8.5);
+
+//Удаляем товар из корзины
+//Давайте без водки
+objBasket.deleteGoodFromBasket(123, 10);
+//Давайте поменьше эля
+objBasket.deleteGoodFromBasket(125, 20);
+
+console.log("**********КОРЗИНА!**********");
+console.log(objBasket);
+console.log("В корзине " + objBasket.arrGoods.length + " вида товара. Общее кол-во товара: " + objBasket.countGoodsInBasket() + " на сумму: " + objBasket.fullPriceInBasket());
+
