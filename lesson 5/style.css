@@ -1,0 +1,21 @@
+
+
+.maindiv {
+    width: 700px;
+    height: 700px;
+    border: 1px solid black;
+}
+.black {
+		display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: black;
+}
+
+.white {
+		display: inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+
+}
